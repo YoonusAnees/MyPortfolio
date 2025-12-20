@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { LuTvMinimal } from "react-icons/lu";
+
 import { 
   Github, 
   Linkedin, 
   Mail, 
   ExternalLink, 
   Code, 
-  Palette, 
   Smartphone,
   Menu,
   X,
   ChevronDown,
   MapPin,
-  Phone
+  Phone,
+  
 } from 'lucide-react';
+
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,35 +36,37 @@ function Home() {
   };
 
   const skills = [
-    { name: 'React', level: 95, color: 'bg-blue-500' },
-    { name: 'TypeScript', level: 90, color: 'bg-blue-600' },
+    { name: 'React', level: 90, color: 'bg-blue-500' },
+    { name: 'TypeScript', level: 85, color: 'bg-blue-600' },
     { name: 'Tailwind CSS', level: 95, color: 'bg-teal-500' },
     { name: 'Node.js', level: 85, color: 'bg-green-500' },
-    { name: 'Python', level: 80, color: 'bg-yellow-500' },
-    { name: 'Next.js', level: 88, color: 'bg-gray-700' },
+    { name: 'Python', level: 60, color: 'bg-yellow-500' },
+    { name: 'Laravel', level: 85, color: 'bg-red-500' },
+    { name: 'Next.js', level: 70, color: 'bg-gray-200' },
+    
   ];
 
   const projects = [
     {
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard.',
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
-      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-      github: '#',
-      live: '#'
+      title: 'Road Crime Fined Management System',
+      description: 'Fully Fledge Road Crime Managment  solution with React, Laravel, and MySQL. Features include user authentication, payment processing, and admin dashboard.',
+      technologies: ['React', 'Laravel', 'MySQL', 'Stripe'],
+      image: 'RCFMS.png',
+      github: 'https://github.com/YoonusAnees/RCFMS.git',
+      
     },
     {
       title: 'Task Management App',
-      description: 'Collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.',
+      description: 'Task Manager With JavaScript Programming language Node.js Backend runtime environment Express.js API routing & server handling Mongoose MongoDB object modeling MongoDB Database hbs / handlebars Optional view rendering.',
       technologies: ['React', 'TypeScript', 'Firebase', 'Tailwind'],
       image: 'https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=800',
-      github: '#',
-      live: '#'
+      github: 'https://github.com/YoonusAnees/Task-Manager.git',
+      live: 'https://task-manager-ze0d.onrender.com/'
     },
     {
-      title: 'Weather Dashboard',
-      description: 'Beautiful weather application with location-based forecasts, interactive maps, and detailed weather analytics.',
-      technologies: ['React', 'OpenWeather API', 'Chart.js', 'CSS'],
+      title: 'Hotel Management ',
+      description: 'Hotel Management System with html css javaScript with PHP.',
+      technologies: ['HTML', 'CSS', 'JavaScript', 'PHP'],
       image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800',
       github: '#',
       live: '#'
@@ -178,7 +183,7 @@ function Home() {
               Yoonus Anees
             </h1>
             <p className="text-xl md:text-2xl lg:text-3xl mb-8 text-gray-300">
-              Full Stack Developer
+             Software Engineer | Full Stack Developer 
             </p>
             <p className="text-lg md:text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
               Passionate about creating beautiful, functional, and user-friendly applications that solve real-world problems.
@@ -219,20 +224,20 @@ function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-lg text-gray-300 leading-relaxed">
-                I'm a passionate full-stack developer with over 5 years of experience creating web applications that combine beautiful design with powerful functionality. My journey in tech started with a curiosity about how things work, and it has evolved into a deep love for solving complex problems through code.
+                I'm a passionate full-stack developer creating web applications that combine beautiful design with powerful functionality. My journey in tech started with a curiosity about how things work, and it has evolved into a deep love for solving complex problems through code.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
                 I specialize in modern web technologies including React, TypeScript, Node.js, and cloud platforms. I believe in writing clean, maintainable code and creating user experiences that are both intuitive and delightful.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <div className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg">
-                  <Code className="text-blue-400" size={20} />
+                  <LuTvMinimal className="text-blue-400" size={20} />
+                  <span>Software Engineer</span>
+                </div>
+                <div className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg">
+                  <Code className="text-purple-400" size={20} />
                   <span>Full Stack Development</span>
                 </div>
-                {/* <div className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg">
-                  <Palette className="text-purple-400" size={20} />
-                  <span>UI/UX Design</span>
-                </div> */}
                 <div className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg">
                   <Smartphone className="text-emerald-400" size={20} />
                   <span>Mobile Development</span>
@@ -365,7 +370,7 @@ function Home() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">Email</h3>
-                  <p className="text-gray-400">john.doe@example.com</p>
+                  <p className="text-gray-400">yoonusanees2002@gmail.com</p>
                 </div>
               </div>
               
@@ -375,7 +380,7 @@ function Home() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">Phone</h3>
-                  <p className="text-gray-400">+1 (555) 123-4567</p>
+                  <p className="text-gray-400">0761310771</p>
                 </div>
               </div>
               
@@ -385,25 +390,25 @@ function Home() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">Location</h3>
-                  <p className="text-gray-400">San Francisco, CA</p>
+                  <p className="text-gray-400">Akurana,Kandy ,Sri Lanka</p>
                 </div>
               </div>
               
               <div className="flex gap-6 justify-center md:justify-start">
                 <a 
-                  href="#" 
+                  href="https://github.com/YoonusAnees" 
                   className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
                 >
                   <Github className="text-white" size={24} />
                 </a>
                 <a 
-                  href="#" 
+                  href="www.linkedin.com/in/yoonus-anees-59b7b2302" 
                   className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
                 >
                   <Linkedin className="text-white" size={24} />
                 </a>
                 <a 
-                  href="#" 
+                  href="mailto:yoonusanees2002@gmail.com" 
                   className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
                 >
                   <Mail className="text-white" size={24} />
@@ -454,8 +459,7 @@ function Home() {
       <footer className="bg-gray-800 py-8 border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-gray-400">
-            <p>&copy; 2024 John Doe. All rights reserved.</p>
-            <p className="mt-2 text-sm">Built with React & Tailwind CSS</p>
+            <p>&copy; 2025 Yoonus Anees. All rights reserved.</p>
           </div>
         </div>
       </footer>
