@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LuTvMinimal } from "react-icons/lu";
 
 import {
@@ -13,9 +13,9 @@ import {
   ChevronDown,
   MapPin,
   Phone,
-
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
-
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,12 +24,22 @@ function Home() {
   const [activeProject, setActiveProject] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
 
-
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close carousel on Escape key press
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isCarouselOpen) {
+        closeCarousel();
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isCarouselOpen]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -37,6 +47,56 @@ function Home() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMenuOpen(false);
+  };
+
+  // DEBUG: Add console logs to see what's happening
+  const openCarousel = useCallback((project) => {
+    console.log('Opening carousel for project:', project.title);
+    console.log('Project images:', project.images);
+    
+    setActiveProject(project);
+    setCurrentImage(0);
+    setIsCarouselOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    console.log('Carousel should be open now');
+  }, []);
+
+  const closeCarousel = useCallback(() => {
+    console.log('Closing carousel');
+    setIsCarouselOpen(false);
+    setActiveProject(null);
+    document.body.style.overflow = 'auto'; // Restore scrolling
+  }, []);
+
+  const nextImage = useCallback((e) => {
+    e?.stopPropagation();
+    if (activeProject && activeProject.images) {
+      setCurrentImage(prev => 
+        prev === activeProject.images.length - 1 ? 0 : prev + 1
+      );
+    }
+  }, [activeProject]);
+
+  const prevImage = useCallback((e) => {
+    e?.stopPropagation();
+    if (activeProject && activeProject.images) {
+      setCurrentImage(prev => 
+        prev === 0 ? activeProject.images.length - 1 : prev - 1
+      );
+    }
+  }, [activeProject]);
+
+  // Helper function to get image source
+  const getImageSrc = (imgPath) => {
+    // If it's a URL (starts with http), use it directly
+    if (imgPath.startsWith('http')) {
+      return imgPath;
+    }
+    // If it's a local path without ./, add it
+    if (!imgPath.startsWith('./') && !imgPath.startsWith('/')) {
+      return `./${imgPath}`;
+    }
+    return imgPath;
   };
 
   const skills = [
@@ -47,7 +107,6 @@ function Home() {
     { name: 'Python', level: 60, color: 'bg-yellow-500' },
     { name: 'Laravel', level: 85, color: 'bg-red-500' },
     { name: 'Next.js', level: 70, color: 'bg-gray-200' },
-
   ];
 
   const projects = [
@@ -55,17 +114,19 @@ function Home() {
       title: 'Road Crime Fine Management System',
       description: 'Full stack system with React, Laravel & MySQL.',
       technologies: ['React', 'Laravel', 'MySQL'],
-      images: ['RCFMS.png', 'RCFMS-2.png', 'RCFMS-3.png', 'RCFMS-4.png', 'RCFMS-5.png', 'RCFMS-6.png', 'RCFMS-7.png', 'RCFMS-8.png', 'RCFMS-9.png', 'RCFMS-10.png', 'RCFMS-11.png', 'RCFMS-12.png', 'RCFMS-13.png', 'RCFMS-14.png', 'RCFMS-15.png', 'RCFMS-16.png', 'RCFMS-17.png', 'RCFMS-18.png', 'RCFMS-19.png', 'RCFMS-23.png'],
-      github: 'https://github.com/YoonusAnees/RCFMS.git',
-      
+    images: [
+        'RCFMS.png','RCFMS-2.png','RCFMS-3.png','RCFMS-4.png','RCFMS-5.png',
+        'RCFMS-6.png','RCFMS-7.png','RCFMS-8.png','RCFMS-9.png','RCFMS-10.png',
+        'RCFMS-11.png','RCFMS-12.png','RCFMS-13.png','RCFMS-14.png','RCFMS-15.png',
+        'RCFMS-16.png','RCFMS-17.png','RCFMS-18.png','RCFMS-19.png','RCFMS-23.png'
+      ],
+            github: 'https://github.com/YoonusAnees/RCFMS.git',
     },
     {
       title: 'Task Management App',
       description: 'Node.js task manager with MongoDB.',
       technologies: ['Node.js', 'MongoDB'],
-      images: [
-        'https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg'
-      ],
+      images: ['https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg'],
       github: 'https://github.com/YoonusAnees/Task-Manager.git',
       live: 'https://task-manager-ze0d.onrender.com/'
     },
@@ -75,32 +136,30 @@ function Home() {
       technologies: ['PHP', 'Bootstrap'],
       images: ['HMS.png'],
       github: 'https://github.com/YoonusAnees/Hotel-Management-.git',
-      live:'https://mediumspringgreen-nightingale-863353.hostingersite.com/'
-
+      live: 'https://mediumspringgreen-nightingale-863353.hostingersite.com/'
     },
     {
-      title: 'Fund Rising Management System',
+      title: 'Fund Raising Management System',
       description: 'DisasterAid relief management platform.',
       technologies: ['React', 'MongoDB'],
       images: ['FMS.png'],
       github: 'https://github.com/YoonusAnees/DMS-FE.git',
-      githubb:'https://github.com/YoonusAnees/DMS-BE.git',
+      githubb: 'https://github.com/YoonusAnees/DMS-BE.git',
       live: 'https://dms-fe-ubdm.vercel.app'
     },
-      {
-      title: 'Authantication',
+    {
+      title: 'Authentication System',
       description: 'A modern, Responsive Authentication system.',
-      technologies: ['React', 'MongoDB','State Management: React Context API','Routing: React Router DOM','Backend: Node.js, Express.js','Authentication: JWT (JSON Web Tokens)'],
+      technologies: ['React', 'MongoDB', 'React Context API', 'React Router', 'Node.js', 'Express', 'JWT'],
       images: ['Auth.png'],
       github: 'https://github.com/YoonusAnees/Sample-UserAuth-FE.git',
       githubb: 'https://github.com/YoonusAnees/Sample-UserAuth-BE.git',
       live: 'https://sample-user-auth-fe.vercel.app'
     },
-
-        {
+    {
       title: 'Candidate Tracking Management System',
-      description: 'A modern, responsive web application for managing job candidates, interviews, and recruitment processes. Built with React.js and designed to streamline HR operations with an intuitive user interface..',
-      technologies: ['React.js 18.x', 'MongoDB','State Management: React Context API','Routing: React Router DOM','Backend: Node.js, Express.js','Authentication: JWT (JSON Web Tokens)','Chart.js'],
+      description: 'A modern web application for managing job candidates.',
+      technologies: ['React.js', 'MongoDB', 'React Context API', 'React Router', 'Node.js', 'Express', 'JWT', 'Chart.js'],
       images: ['CTMS.png'],
       github: 'https://github.com/YoonusAnees/CTMSFE.git',
       githubb: 'https://github.com/YoonusAnees/CTMSBE.git',
@@ -108,11 +167,16 @@ function Home() {
     },
   ];
 
+  // DEBUG: Log when carousel state changes
+  useEffect(() => {
+    console.log('Carousel is open:', isCarouselOpen);
+    console.log('Active project:', activeProject);
+  }, [isCarouselOpen, activeProject]);
+
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-        }`}>
+      {/* Navigation - Same as before */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -120,95 +184,36 @@ function Home() {
                 Yoonus Anees
               </div>
             </div>
-
-            {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                <button
-                  onClick={() => scrollToSection('home')}
-                  className="hover:text-blue-400 transition-colors duration-200"
-                >
-                  Home
-                </button>
-                <button
-                  onClick={() => scrollToSection('about')}
-                  className="hover:text-blue-400 transition-colors duration-200"
-                >
-                  About
-                </button>
-                <button
-                  onClick={() => scrollToSection('skills')}
-                  className="hover:text-blue-400 transition-colors duration-200"
-                >
-                  Skills
-                </button>
-                <button
-                  onClick={() => scrollToSection('projects')}
-                  className="hover:text-blue-400 transition-colors duration-200"
-                >
-                  Projects
-                </button>
-                <button
-                  onClick={() => scrollToSection('contact')}
-                  className="hover:text-blue-400 transition-colors duration-200"
-                >
-                  Contact
-                </button>
+                <button onClick={() => scrollToSection('home')} className="hover:text-blue-400 transition-colors duration-200">Home</button>
+                <button onClick={() => scrollToSection('about')} className="hover:text-blue-400 transition-colors duration-200">About</button>
+                <button onClick={() => scrollToSection('skills')} className="hover:text-blue-400 transition-colors duration-200">Skills</button>
+                <button onClick={() => scrollToSection('projects')} className="hover:text-blue-400 transition-colors duration-200">Projects</button>
+                <button onClick={() => scrollToSection('contact')} className="hover:text-blue-400 transition-colors duration-200">Contact</button>
               </div>
             </div>
-
-            {/* Mobile menu button */}
             <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-300 hover:text-white p-2"
-              >
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-300 hover:text-white p-2">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden bg-gray-800 shadow-lg">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <button
-                onClick={() => scrollToSection('home')}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => scrollToSection('about')}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection('skills')}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md"
-              >
-                Skills
-              </button>
-              <button
-                onClick={() => scrollToSection('projects')}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md"
-              >
-                Projects
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md"
-              >
-                Contact
-              </button>
+              <button onClick={() => scrollToSection('home')} className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md">Home</button>
+              <button onClick={() => scrollToSection('about')} className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md">About</button>
+              <button onClick={() => scrollToSection('skills')} className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md">Skills</button>
+              <button onClick={() => scrollToSection('projects')} className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md">Projects</button>
+              <button onClick={() => scrollToSection('contact')} className="block w-full text-left px-3 py-2 hover:bg-gray-700 rounded-md">Contact</button>
             </div>
           </div>
         )}
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Same as before */}
       <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -223,29 +228,21 @@ function Home() {
               Passionate about creating beautiful, functional, and user-friendly applications that solve real-world problems.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => scrollToSection('projects')}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
-              >
+              <button onClick={() => scrollToSection('projects')} className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
                 View My Work
               </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200"
-              >
+              <button onClick={() => scrollToSection('contact')} className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200">
                 Get In Touch
               </button>
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="text-white/60" size={32} />
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - Same as before */}
       <section id="about" className="py-20 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -254,14 +251,13 @@ function Home() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
           </div>
-
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-lg text-gray-300 leading-relaxed">
-                I'm a passionate full-stack developer creating web applications that combine beautiful design with powerful functionality. My journey in tech started with a curiosity about how things work, and it has evolved into a deep love for solving complex problems through code.
+                I'm a passionate full-stack developer creating web applications that combine beautiful design with powerful functionality.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
-                I specialize in modern web technologies including React, TypeScript, Node.js, and cloud platforms. I believe in writing clean, maintainable code and creating user experiences that are both intuitive and delightful.
+                I specialize in modern web technologies including React, TypeScript, Node.js, and cloud platforms.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <div className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg">
@@ -278,14 +274,16 @@ function Home() {
                 </div>
               </div>
             </div>
-
             <div className="relative">
-              <div className="w-88 h-88 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center hover:animate-ping hover:scale-105 transition-all duration-800 ring-4 ring-blue-500/20 ">
+              <div className="w-88 h-88 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center hover:animate-ping hover:scale-105 transition-all duration-800 ring-4 ring-blue-500/20">
                 <div className="w-72 h-80 bg-gray-800 rounded-full flex items-center justify-center">
                   <img
                     src="./profile.jpg"
                     alt="Profile"
                     className="w-64 h-80 rounded-full object-cover bg-cover bg-center"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/256x320/1f2937/ffffff?text=Profile';
+                    }}
                   />
                 </div>
               </div>
@@ -294,7 +292,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
+      {/* Skills Section - Same as before */}
       <section id="skills" className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -303,7 +301,6 @@ function Home() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
           </div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skills.map((skill, index) => (
               <div key={index} className="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-all duration-300 transform hover:scale-105">
@@ -312,10 +309,7 @@ function Home() {
                   <span className="text-sm text-gray-400">{skill.level}%</span>
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full ${skill.color} transition-all duration-1000 ease-out`}
-                    style={{ width: `${skill.level}%` }}
-                  ></div>
+                  <div className={`h-2 rounded-full ${skill.color} transition-all duration-1000 ease-out`} style={{ width: `${skill.level}%` }}></div>
                 </div>
               </div>
             ))}
@@ -323,79 +317,181 @@ function Home() {
         </div>
       </section>
 
-
-
- {/* PROJECTS */}
+      {/* Projects Section - FIXED CLICK HANDLER */}
       <section id="projects" className="py-20 bg-gray-800">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((p, i) => (
-            <div key={i} className="bg-gray-900 rounded-xl overflow-hidden">
-              <img
-                src={p.images[0]}
-                alt={p.title}
-                className="h-48 w-full object-cover cursor-pointer"
-                onClick={() => {
-                  setActiveProject(p);
-                  setCurrentImage(0);
-                  setIsCarouselOpen(true);
-                }}
-              />
-              <div className="p-6">
-                <h3 className="font-bold mb-2">{p.title}</h3>
-                <p className="text-gray-400 text-sm mb-4">{p.description}</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Featured Projects
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+          </div>
 
-                <div className="flex gap-4">
-                  <a href={p.github} target="_blank" rel="noreferrer">
-                    <Github size={18} />
-                  </a>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project, index) => (
+              <div 
+                key={index} 
+                className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+              >
+                {/* Project Image with click handler */}
+                <div 
+                  className="relative group overflow-hidden cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Clicked on project:', project.title);
+                    openCarousel(project);
+                  }}
+                >
+                  <img
+                    src={getImageSrc(project.images[0])}
+                    alt={project.title}
+                    className="h-56 w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/400x224/1f2937/ffffff?text=Image+Not+Found';
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white font-semibold bg-black/70 px-4 py-2 rounded-lg">
+                      View Gallery
+                    </span>
+                  </div>
+                </div>
 
-                  {p.githubb && (
-                  <a href={p.githubb} target="_blank" rel="noreferrer">
-                    <Github size={18} />
-                  </a>
-                  )}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-3 text-white">{project.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4">{project.description}</p>
 
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      <span key={techIndex} className="bg-gray-700 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span className="bg-gray-700 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
+                        +{project.technologies.length - 3} more
+                      </span>
+                    )}
+                  </div>
 
-              
-                  {p.live && (
-                    <a href={p.live} target="_blank" rel="noreferrer">
-                      <ExternalLink size={18} />
+                  <div className="flex gap-4">
+                    <a href={project.github} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors">
+                      <Github size={18} /> <span className="text-sm">Code</span>
                     </a>
-                  )}
+                    {project.githubb && (
+                      <a href={project.githubb} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors">
+                        <Github size={18} /> <span className="text-sm">Backend</span>
+                      </a>
+                    )}
+                    {project.live && (
+                      <a href={project.live} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors">
+                        <ExternalLink size={18} /> <span className="text-sm">Live Demo</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CAROUSEL */}
+      {/* Carousel Modal - FIXED VERSION */}
       {isCarouselOpen && activeProject && (
-        <div className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center">
-          <div className="relative bg-gray-900 p-6 rounded-xl w-full max-w-4xl">
-            <button onClick={() => setIsCarouselOpen(false)} className="absolute top-4 right-4">
-              <X size={28} />
+        <div 
+          className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4"
+          onClick={closeCarousel}
+        >
+          <div 
+            className="relative bg-gray-900 rounded-xl w-full max-w-6xl max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button 
+              onClick={closeCarousel}
+              className="absolute top-4 right-4 z-20 p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+            >
+              <X size={24} />
             </button>
-
-            <img
-              src={activeProject.images[currentImage] || activeProject.images[0]}
-              className="w-full h-[450px] object-contain rounded"
-              alt="preview"
-            />
-
-            <div className="flex justify-between mt-6">
-              <button onClick={() => setCurrentImage(currentImage === 0 ? activeProject.images.length - 1 : currentImage - 1)}>Prev</button>
-              <button onClick={() => setCurrentImage(currentImage === activeProject.images.length - 1 ? 0 : currentImage + 1)}>Next</button>
+            
+            {/* Project title */}
+            <div className="p-6 border-b border-gray-700">
+              <h3 className="text-xl font-bold text-white">{activeProject.title}</h3>
             </div>
+            
+            {/* Main image container */}
+            <div className="relative h-[60vh] flex items-center justify-center p-4">
+              {activeProject.images && activeProject.images.length > 0 ? (
+                <img
+                  src={getImageSrc(activeProject.images[currentImage])}
+                  className="max-h-full max-w-full object-contain rounded-lg"
+                  alt={`${activeProject.title} - Image ${currentImage + 1}`}
+                  onError={(e) => {
+                    console.error('Failed to load image:', activeProject.images[currentImage]);
+                    e.target.src = 'https://via.placeholder.com/800x600/1f2937/ffffff?text=Image+Not+Found';
+                  }}
+                />
+              ) : (
+                <div className="text-gray-400 text-center">
+                  No images available
+                </div>
+              )}
+              
+              {/* Navigation arrows */}
+              {activeProject.images && activeProject.images.length > 1 && (
+                <>
+                  <button 
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 rounded-full hover:bg-gray-700 transition-colors"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button 
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 rounded-full hover:bg-gray-700 transition-colors"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                </>
+              )}
+            </div>
+            
+            {/* Image counter */}
+            {activeProject.images && activeProject.images.length > 1 && (
+              <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800/80 px-4 py-2 rounded-full text-sm">
+                {currentImage + 1} / {activeProject.images.length}
+              </div>
+            )}
+            
+            {/* Thumbnails */}
+            {activeProject.images && activeProject.images.length > 1 && (
+              <div className="p-4 border-t border-gray-700">
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {activeProject.images.map((img, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImage(index)}
+                      className={`flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 ${currentImage === index ? 'border-blue-500' : 'border-transparent'} hover:border-blue-300 transition-colors`}
+                    >
+                      <img
+                        src={getImageSrc(img)}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/64/1f2937/ffffff?text=X';
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      
-
-
-
-      {/* Contact Section */}
+      {/* Contact Section - Same as before */}
       <section id="contact" className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -404,101 +500,34 @@ function Home() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
             <p className="text-xl text-gray-400 mt-6 max-w-2xl mx-auto">
-              I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together!
+              I'm always interested in new opportunities and exciting projects.
             </p>
           </div>
-
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-8">
               <div className="flex items-center gap-4 p-6 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
-                <div className="p-3 bg-blue-500 rounded-lg">
-                  <Mail className="text-white" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Email</h3>
-                  <p className="text-gray-400">yoonusanees2002@gmail.com</p>
-                </div>
+                <div className="p-3 bg-blue-500 rounded-lg"><Mail className="text-white" size={24} /></div>
+                <div><h3 className="text-lg font-semibold text-white">Email</h3><p className="text-gray-400">yoonusanees2002@gmail.com</p></div>
               </div>
-
               <div className="flex items-center gap-4 p-6 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
-                <div className="p-3 bg-purple-500 rounded-lg">
-                  <Phone className="text-white" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Phone</h3>
-                  <p className="text-gray-400">0761310771</p>
-                </div>
+                <div className="p-3 bg-purple-500 rounded-lg"><Phone className="text-white" size={24} /></div>
+                <div><h3 className="text-lg font-semibold text-white">Phone</h3><p className="text-gray-400">0761310771</p></div>
               </div>
-
               <div className="flex items-center gap-4 p-6 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors">
-                <div className="p-3 bg-emerald-500 rounded-lg">
-                  <MapPin className="text-white" size={24} />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Location</h3>
-                  <p className="text-gray-400">Akurana,Kandy ,Sri Lanka</p>
-                </div>
+                <div className="p-3 bg-emerald-500 rounded-lg"><MapPin className="text-white" size={24} /></div>
+                <div><h3 className="text-lg font-semibold text-white">Location</h3><p className="text-gray-400">Akurana, Kandy, Sri Lanka</p></div>
               </div>
-
               <div className="flex gap-6 justify-center md:justify-start">
-                <a
-                  href="https://github.com/YoonusAnees"
-                  target="_blank" rel="noreferrer"
-                  className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
-                >
-                  <Github className="text-white" size={24} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/yoonus-anees-59b7b2302/?originalSubdomain=lk"
-                  target="_blank" rel="noreferrer"
-                  className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
-                >
-                  <Linkedin className="text-white" size={24} />
-                </a>
-                <a
-                  href="mailto:yoonusanees2002@gmail.com"
-                  target="_blank" rel="noreferrer"
-                  className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"
-                >
-                  <Mail className="text-white" size={24} />
-                </a>
+                <a href="https://github.com/YoonusAnees" target="_blank" rel="noreferrer" className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"><Github className="text-white" size={24} /></a>
+                <a href="https://www.linkedin.com/in/yoonus-anees-59b7b2302/" target="_blank" rel="noreferrer" className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"><Linkedin className="text-white" size={24} /></a>
+                <a href="mailto:yoonusanees2002@gmail.com" target="_blank" rel="noreferrer" className="p-3 bg-gray-800 hover:bg-blue-600 rounded-lg transition-colors"><Mail className="text-white" size={24} /></a>
               </div>
             </div>
-
             <form className="space-y-6 bg-gray-800 p-8 rounded-xl">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Name</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                <input
-                  type="email"
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                <textarea
-                  rows={5}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white resize-none"
-                  placeholder="Tell me about your project..."
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
-              >
-                Send Message
-              </button>
+              <div><label className="block text-sm font-medium text-gray-300 mb-2">Name</label><input type="text" className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white" placeholder="Your name" /></div>
+              <div><label className="block text-sm font-medium text-gray-300 mb-2">Email</label><input type="email" className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white" placeholder="your.email@example.com" /></div>
+              <div><label className="block text-sm font-medium text-gray-300 mb-2">Message</label><textarea rows={5} className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white resize-none" placeholder="Tell me about your project..."></textarea></div>
+              <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">Send Message</button>
             </form>
           </div>
         </div>
@@ -512,8 +541,6 @@ function Home() {
           </div>
         </div>
       </footer>
-
-      
     </div>
   );
 }
