@@ -151,7 +151,7 @@ function Home() {
       {
       title: 'Payroll Management System',
       description: 'Payroll management platform for Equipment.',
-      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB'],
+      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB','Chart.js','Stripe'],
       images: ['MDPOS.png'],
       github: 'https://github.com/YoonusAnees/POS.git',
       githubb: 'https://github.com/YoonusAnees/Anexxa.git',
@@ -169,7 +169,7 @@ function Home() {
     {
       title: 'Candidate Tracking Management System',
       description: 'A modern web application for managing job candidates.',
-      technologies: ['Node.js','React.js', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT', 'Chart.js'],
+      technologies: ['Node.js','React.js', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT'],
       images: ['CTMS.png'],
       github: 'https://github.com/YoonusAnees/CTMSFE.git',
       githubb: 'https://github.com/YoonusAnees/CTMSBE.git',
