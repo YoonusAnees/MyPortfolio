@@ -23,7 +23,7 @@ function Home() {
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
-  
+
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -54,7 +54,7 @@ function Home() {
   const openCarousel = useCallback((project) => {
     console.log('Opening carousel for project:', project.title);
     console.log('Project images:', project.images);
-    
+
     setActiveProject(project);
     setCurrentImage(0);
     setIsCarouselOpen(true);
@@ -72,7 +72,7 @@ function Home() {
   const nextImage = useCallback((e) => {
     e?.stopPropagation();
     if (activeProject && activeProject.images) {
-      setCurrentImage(prev => 
+      setCurrentImage(prev =>
         prev === activeProject.images.length - 1 ? 0 : prev + 1
       );
     }
@@ -81,7 +81,7 @@ function Home() {
   const prevImage = useCallback((e) => {
     e?.stopPropagation();
     if (activeProject && activeProject.images) {
-      setCurrentImage(prev => 
+      setCurrentImage(prev =>
         prev === 0 ? activeProject.images.length - 1 : prev - 1
       );
     }
@@ -114,19 +114,19 @@ function Home() {
     {
       title: 'Road Crime Fine Management System',
       description: 'Full stack system with React, Laravel & MySQL.',
-      technologies: ['Laravel', 'React', 'MySQL','Stripe'],
-    images: [
-        'RCFMS.png','RCFMS-2.png','RCFMS-3.png','RCFMS-4.png','RCFMS-5.png',
-        'RCFMS-6.png','RCFMS-7.png','RCFMS-8.png','RCFMS-9.png','RCFMS-10.png',
-        'RCFMS-11.png','RCFMS-12.png','RCFMS-13.png','RCFMS-14.png','RCFMS-15.png',
-        'RCFMS-16.png','RCFMS-17.png','RCFMS-18.png','RCFMS-19.png','RCFMS-23.png'
+      technologies: ['Laravel', 'React', 'MySQL', 'Stripe' ,'Eloquent' ],
+      images: [
+        'RCFMS.png', 'RCFMS-2.png', 'RCFMS-3.png', 'RCFMS-4.png', 'RCFMS-5.png',
+        'RCFMS-6.png', 'RCFMS-7.png', 'RCFMS-8.png', 'RCFMS-9.png', 'RCFMS-10.png',
+        'RCFMS-11.png', 'RCFMS-12.png', 'RCFMS-13.png', 'RCFMS-14.png', 'RCFMS-15.png',
+        'RCFMS-16.png', 'RCFMS-17.png', 'RCFMS-18.png', 'RCFMS-19.png', 'RCFMS-23.png'
       ],
-            github: 'https://github.com/YoonusAnees/RCFMS.git',
+      github: 'https://github.com/YoonusAnees/RCFMS.git',
     },
     {
       title: 'Task Management App',
       description: 'Node.js task manager with MongoDB.',
-      technologies: ['Node.js','HTML','CSS','JavaScript','HBS', 'MongoDB'],
+      technologies: ['Node.js', 'HTML', 'CSS', 'JavaScript', 'HBS', 'MongoDB'],
       images: ['https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg'],
       github: 'https://github.com/YoonusAnees/Task-Manager.git',
       live: 'https://task-manager-ze0d.onrender.com/'
@@ -142,16 +142,16 @@ function Home() {
     {
       title: 'Fund Raising Management System',
       description: 'DisasterAid relief management platform.',
-      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB'],
+      technologies: ['Node.js', 'React', 'Express', 'JWT', 'MongoDB'],
       images: ['FMS.png'],
       github: 'https://github.com/YoonusAnees/DMS-FE.git',
       githubb: 'https://github.com/YoonusAnees/DMS-BE.git',
       live: 'https://dms-fe-ubdm.vercel.app'
     },
-      {
+    {
       title: 'Payroll Management System',
       description: 'Payroll management platform for Equipment.',
-      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB','Chart.js','Stripe'],
+      technologies: ['Node.js', 'React', 'Express', 'JWT', 'MongoDB','Mongoose'  , 'Chart.js', 'Stripe'],
       images: ['MDPOS.png'],
       github: 'https://github.com/YoonusAnees/POS.git',
       githubb: 'https://github.com/YoonusAnees/Anexxa.git',
@@ -160,7 +160,7 @@ function Home() {
     {
       title: 'Authentication System',
       description: 'A modern, Responsive Authentication system.',
-      technologies: ['Node.js','React', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT'],
+      technologies: ['Node.js', 'React', 'MongoDB','Mongoose' , 'React Context API', 'React Router', 'Express', 'JWT'],
       images: ['Auth.png'],
       github: 'https://github.com/YoonusAnees/Sample-UserAuth-FE.git',
       githubb: 'https://github.com/YoonusAnees/Sample-UserAuth-BE.git',
@@ -169,31 +169,31 @@ function Home() {
     {
       title: 'Candidate Tracking Management System',
       description: 'A modern web application for managing job candidates.',
-      technologies: ['Node.js','React.js', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT'],
+      technologies: ['Node.js', 'React.js', 'MongoDB', 'Mongoose' , 'React Context API', 'React Router', 'Express', 'JWT'],
       images: ['CTMS.png'],
       github: 'https://github.com/YoonusAnees/CTMSFE.git',
       githubb: 'https://github.com/YoonusAnees/CTMSBE.git',
       live: 'https://ctmsfe-1wfp.vercel.app'
     },
 
-       {
+    {
       title: 'Book Shop Management System',
       description: 'Book Shop management system for book sales and inventory.',
-      technologies: ['Java','HTML', 'CSS', 'JavaScript', 'MySQL', 'jsp servlet', 'JWT'],
-      images: ['J1.png','J2.png','J3.png','J4.png','J5.png','J6.png','J7.png','J8.png','J9.png','J10.png','J11.png','J12.png','j13.png','j14.png','j15.png','j16.png','j17.png','j18.png','j19.png','j20.png'],
+      technologies: ['Java', 'HTML', 'CSS', 'JavaScript', 'MySQL', 'jsp servlet', 'JWT'],
+      images: ['J1.png', 'J2.png', 'J3.png', 'J4.png', 'J5.png', 'J6.png', 'J7.png', 'J8.png', 'J9.png', 'J10.png', 'J11.png', 'J12.png', 'j13.png', 'j14.png', 'j15.png', 'j16.png', 'j17.png', 'j18.png', 'j19.png', 'j20.png'],
       github: 'https://github.com/YoonusAnees/PahanaBookShop.git',
       // live: 'https://ctmsfe-1wfp.vercel.app'
     },
-
       {
-      title: 'Hotel Management System',
-      description: 'Hotel Management System for booking and management.',
-
-
-      technologies: ['Firebase','Java'],
-      images: ['M1.png','M2.png','M3.png','M4.png','M5.png','M6.png','M7.png','M8.png'],
-      github: 'https://github.com/YoonusAnees/HMS.git',
+      title: 'Pharmaceutical-Cooperation-System',
+      description: 'Project provides a RESTful API designed for managing various operations of a pharmaceutical system, developed using C# with the .NET Framework. The system includes functionalities such as managing medicines, storing patient information, tracking inventory, and handling prescriptions. The backend is connected to a Microsoft SQL Server database',
+      technologies: ['Microsoft SQL Server','NET Framework','Entity Framework' , 'C#', 'HTML', 'CSS', 'JavaScript'],
+      images: ['SPC1.png', 'SPC2.png', 'SPC3.png', 'SPC4.png', 'SPC5.png', 'SPC6.png', 'SPC7.png', 'SPC8.png', 'SPC9.png', 'SPC10.png', 'SPC11.png', 'SPC12.png', 'SPC13.png', 'SPC14.png', 'SPC15.png', 'SPC16.png', 'SPC17.png', 'SPC18.png', 'SPC19.png', 'SPC20.png'],
+      github: 'https://github.com/YoonusAnees/State-Pharmaceutical-Cooperation-System.git',
+      githubb:'https://github.com/YoonusAnees/StatePharmaceuticalCooperationAPI-BE.git',
     },
+
+  
   ];
 
   useEffect(() => {
@@ -352,12 +352,12 @@ function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Project Image with click handler */}
-                <div 
+                <div
                   className="relative group overflow-hidden cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
@@ -422,27 +422,27 @@ function Home() {
 
       {/* Carousel Modal - FIXED VERSION */}
       {isCarouselOpen && activeProject && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4"
           onClick={closeCarousel}
         >
-          <div 
+          <div
             className="relative bg-gray-900 rounded-xl w-full max-w-6xl max-h-[90vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
-            <button 
+            <button
               onClick={closeCarousel}
               className="absolute top-4 right-4 z-20 p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
             >
               <X size={24} />
             </button>
-            
+
             {/* Project title */}
             <div className="p-6 border-b border-gray-700">
               <h3 className="text-xl font-bold text-white">{activeProject.title}</h3>
             </div>
-            
+
             {/* Main image container */}
             <div className="relative h-[60vh] flex items-center justify-center p-4">
               {activeProject.images && activeProject.images.length > 0 ? (
@@ -460,17 +460,17 @@ function Home() {
                   No images available
                 </div>
               )}
-              
+
               {/* Navigation arrows */}
               {activeProject.images && activeProject.images.length > 1 && (
                 <>
-                  <button 
+                  <button
                     onClick={prevImage}
                     className="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 rounded-full hover:bg-gray-700 transition-colors"
                   >
                     <ChevronLeft size={24} />
                   </button>
-                  <button 
+                  <button
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 rounded-full hover:bg-gray-700 transition-colors"
                   >
@@ -479,14 +479,14 @@ function Home() {
                 </>
               )}
             </div>
-            
+
             {/* Image counter */}
             {activeProject.images && activeProject.images.length > 1 && (
               <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800/80 px-4 py-2 rounded-full text-sm">
                 {currentImage + 1} / {activeProject.images.length}
               </div>
             )}
-            
+
             {/* Thumbnails */}
             {activeProject.images && activeProject.images.length > 1 && (
               <div className="p-4 border-t border-gray-700">
