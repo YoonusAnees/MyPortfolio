@@ -148,6 +148,15 @@ function Home() {
       githubb: 'https://github.com/YoonusAnees/DMS-BE.git',
       live: 'https://dms-fe-ubdm.vercel.app'
     },
+      {
+      title: 'Payroll Management System',
+      description: 'Payroll management platform for Equipment.',
+      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB'],
+      images: ['MDPOS.png'],
+      github: 'https://github.com/YoonusAnees/POS.git',
+      githubb: 'https://github.com/YoonusAnees/Anexxa.git',
+      live: 'https://pos-tau-blond.vercel.app'
+    },
     {
       title: 'Authentication System',
       description: 'A modern, Responsive Authentication system.',
@@ -168,7 +177,7 @@ function Home() {
     },
 
        {
-      title: 'Book Shop',
+      title: 'Book Shop Management System',
       description: 'Book Shop management system for book sales and inventory.',
       technologies: ['Java','HTML', 'CSS', 'JavaScript', 'MySQL', 'jsp servlet', 'JWT'],
       images: ['J1.png','J2.png','J3.png','J4.png','J5.png','J6.png','J7.png','J8.png','J9.png','J10.png','J11.png','J12.png','j13.png','j14.png','j15.png','j16.png','j17.png','j18.png','j19.png','j20.png'],
