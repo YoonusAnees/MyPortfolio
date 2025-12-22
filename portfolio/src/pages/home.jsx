@@ -184,6 +184,16 @@ function Home() {
       github: 'https://github.com/YoonusAnees/PahanaBookShop.git',
       // live: 'https://ctmsfe-1wfp.vercel.app'
     },
+
+      {
+      title: 'Hotel Management System',
+      description: 'Hotel Management System for booking and management.',
+
+
+      technologies: ['Firebase','Java'],
+      images: ['M1.png','M2.png','M3.png','M4.png','M5.png','M6.png','M7.png','M8.png'],
+      github: 'https://github.com/YoonusAnees/HMS.git',
+    },
   ];
 
   useEffect(() => {
