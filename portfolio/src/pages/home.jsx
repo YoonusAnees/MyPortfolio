@@ -23,6 +23,7 @@ function Home() {
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [activeProject, setActiveProject] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -113,7 +114,7 @@ function Home() {
     {
       title: 'Road Crime Fine Management System',
       description: 'Full stack system with React, Laravel & MySQL.',
-      technologies: ['React', 'Laravel', 'MySQL'],
+      technologies: ['Laravel', 'React', 'MySQL','Stripe'],
     images: [
         'RCFMS.png','RCFMS-2.png','RCFMS-3.png','RCFMS-4.png','RCFMS-5.png',
         'RCFMS-6.png','RCFMS-7.png','RCFMS-8.png','RCFMS-9.png','RCFMS-10.png',
@@ -125,7 +126,7 @@ function Home() {
     {
       title: 'Task Management App',
       description: 'Node.js task manager with MongoDB.',
-      technologies: ['Node.js', 'MongoDB'],
+      technologies: ['Node.js','HTML','CSS','JavaScript','HBS', 'MongoDB'],
       images: ['https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg'],
       github: 'https://github.com/YoonusAnees/Task-Manager.git',
       live: 'https://task-manager-ze0d.onrender.com/'
@@ -133,7 +134,7 @@ function Home() {
     {
       title: 'Hotel Management System',
       description: 'Serenity Villa booking system.',
-      technologies: ['PHP', 'Bootstrap'],
+      technologies: ['PHP', 'HTML', 'CSS', 'JavaScript', 'MySQL'],
       images: ['HMS.png'],
       github: 'https://github.com/YoonusAnees/Hotel-Management-.git',
       live: 'https://mediumspringgreen-nightingale-863353.hostingersite.com/'
@@ -141,7 +142,7 @@ function Home() {
     {
       title: 'Fund Raising Management System',
       description: 'DisasterAid relief management platform.',
-      technologies: ['React', 'MongoDB'],
+      technologies: ['Node.js','React', 'Express','JWT' ,'MongoDB'],
       images: ['FMS.png'],
       github: 'https://github.com/YoonusAnees/DMS-FE.git',
       githubb: 'https://github.com/YoonusAnees/DMS-BE.git',
@@ -150,7 +151,7 @@ function Home() {
     {
       title: 'Authentication System',
       description: 'A modern, Responsive Authentication system.',
-      technologies: ['React', 'MongoDB', 'React Context API', 'React Router', 'Node.js', 'Express', 'JWT'],
+      technologies: ['Node.js','React', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT'],
       images: ['Auth.png'],
       github: 'https://github.com/YoonusAnees/Sample-UserAuth-FE.git',
       githubb: 'https://github.com/YoonusAnees/Sample-UserAuth-BE.git',
@@ -159,15 +160,23 @@ function Home() {
     {
       title: 'Candidate Tracking Management System',
       description: 'A modern web application for managing job candidates.',
-      technologies: ['React.js', 'MongoDB', 'React Context API', 'React Router', 'Node.js', 'Express', 'JWT', 'Chart.js'],
+      technologies: ['Node.js','React.js', 'MongoDB', 'React Context API', 'React Router', 'Express', 'JWT', 'Chart.js'],
       images: ['CTMS.png'],
       github: 'https://github.com/YoonusAnees/CTMSFE.git',
       githubb: 'https://github.com/YoonusAnees/CTMSBE.git',
       live: 'https://ctmsfe-1wfp.vercel.app'
     },
+
+       {
+      title: 'Book Shop',
+      description: 'Book Shop management system for book sales and inventory.',
+      technologies: ['Java','HTML', 'CSS', 'JavaScript', 'MySQL', 'jsp servlet', 'JWT'],
+      images: ['J1.png','J2.png','J3.png','J4.png','J5.png','J6.png','J7.png','J8.png','J9.png','J10.png','J11.png','J12.png','j13.png','j14.png','j15.png','j16.png','j17.png','j18.png','j19.png','j20.png'],
+      github: 'https://github.com/YoonusAnees/PahanaBookShop.git',
+      // live: 'https://ctmsfe-1wfp.vercel.app'
+    },
   ];
 
-  // DEBUG: Log when carousel state changes
   useEffect(() => {
     console.log('Carousel is open:', isCarouselOpen);
     console.log('Active project:', activeProject);
@@ -175,7 +184,6 @@ function Home() {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      {/* Navigation - Same as before */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -213,7 +221,6 @@ function Home() {
         )}
       </nav>
 
-      {/* Hero Section - Same as before */}
       <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -242,7 +249,6 @@ function Home() {
         </div>
       </section>
 
-      {/* About Section - Same as before */}
       <section id="about" className="py-20 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -292,7 +298,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Skills Section - Same as before */}
       <section id="skills" className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -317,7 +322,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Projects Section - FIXED CLICK HANDLER */}
       <section id="projects" className="py-20 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -363,16 +367,16 @@ function Home() {
                   <p className="text-gray-400 text-sm mb-4">{project.description}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                    {project.technologies.slice(0, 10).map((tech, techIndex) => (
                       <span key={techIndex} className="bg-gray-700 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 3 && (
+                    {/* {project.technologies.length > 3 && (
                       <span className="bg-gray-700 text-blue-400 px-3 py-1 rounded-full text-xs font-medium">
                         +{project.technologies.length - 3} more
                       </span>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="flex gap-4">
