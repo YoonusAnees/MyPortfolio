@@ -242,27 +242,63 @@ function Home() {
 
       <section id="home" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-in">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
-              Yoonus Anees
-            </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl mb-8 text-gray-300">
-              Software Engineer | Full Stack Developer
-            </p>
-            <p className="text-lg md:text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
-              Passionate about creating beautiful, functional, and user-friendly applications that solve real-world problems.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button onClick={() => scrollToSection('projects')} className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
-                View My Work
-              </button>
-              <button onClick={() => scrollToSection('contact')} className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200">
-                Get In Touch
-              </button>
-            </div>
-          </div>
-        </div>
+  <div className="relative z-10 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div className="animate-fade-in space-y-6">
+
+    {/* Name */}
+    <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white relative inline-block">
+      Yoonus Anees
+      <span className="absolute left-1/2 -bottom-2 w-16 h-1 bg-blue-500 -translate-x-1/2 rounded-full"></span>
+    </h1>
+
+    {/* Role */}
+    <p className="text-xl md:text-2xl lg:text-3xl text-gray-300">
+      Software Engineer • Full Stack Developer
+    </p>
+
+    {/* Description */}
+    <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+      Passionate about crafting scalable, user-friendly applications that turn
+      real-world problems into elegant digital solutions.
+    </p>
+
+    {/* Buttons */}
+    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+
+      <button
+        onClick={() => scrollToSection('projects')}
+        className="
+          px-8 py-3 rounded-xl font-semibold text-white
+          bg-blue-600/90 backdrop-blur
+          shadow-lg shadow-blue-500/20
+          hover:bg-blue-500
+          hover:shadow-blue-500/40
+          transform hover:-translate-y-1 hover:scale-105
+          transition-all duration-300
+        "
+      >
+        View My Work
+      </button>
+
+      <button
+        onClick={() => scrollToSection('contact')}
+        className="
+          px-8 py-3 rounded-xl font-semibold
+          text-blue-400 border border-blue-400/50
+          hover:bg-blue-400/10
+          hover:border-blue-400
+          hover:text-white
+          transform hover:-translate-y-1
+          transition-all duration-300
+        "
+      >
+        Get In Touch
+      </button>
+
+    </div>
+  </div>
+</div>
+
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="text-white/60" size={32} />
         </div>
