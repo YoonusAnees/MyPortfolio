@@ -218,7 +218,7 @@ function Home() {
       title: 'Money Tracking System',
       description: 'Tracking System where we can see who sent the money and total amount .',
       technologies: ['Node.js', 'React', 'Express',  'MongoDB'],
-      // images: ['MDPOS.png'],
+       images:['MoneyTracker.png'],
       github: 'https://github.com/YoonusAnees/KBMS-FE.git',
       githubb: 'https://github.com/YoonusAnees/KBMS-BE.git',
       live: 'https://kbms-seven.vercel.app/'
