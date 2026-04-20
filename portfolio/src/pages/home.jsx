@@ -131,10 +131,7 @@ const getImageSrc = (imgPath) => {
       description: 'Sri Lnaka E-Penalty Safty Managment System.',
       technologies: ['Node js', 'React', 'PsogrsSQL', 'Stripe', 'Autowrapper','Typescript'],
       images: [
-        // 'RCFMS.png', 'RCFMS-2.png', 'RCFMS-3.png', 'RCFMS-4.png', 'RCFMS-5.png',
-        // 'RCFMS-6.png', 'RCFMS-7.png', 'RCFMS-8.png', 'RCFMS-9.png', 'RCFMS-10.png',
-        // 'RCFMS-11.png', 'RCFMS-12.png', 'RCFMS-13.png', 'RCFMS-14.png', 'RCFMS-15.png',
-        // 'RCFMS-16.png', 'RCFMS-17.png', 'RCFMS-18.png', 'RCFMS-19.png', 'RCFMS-23.png'
+        'SLREPSM.png'
       ],
        github: 'https://github.com/YoonusAnees/SLREPMSFE.git',
       githubb: 'https://github.com/YoonusAnees/SLREPSMS-Backend.git',
