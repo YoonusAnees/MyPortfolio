@@ -682,7 +682,7 @@ function Home() {
               </div>
             )}
 
-            {/* Thumbnails */}
+            {/* Thumbnailss */}
             {activeProject.images && activeProject.images.length > 1 && (
               <div className="p-6 bg-gradient-to-t from-gray-900/50 to-transparent">
                 <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
