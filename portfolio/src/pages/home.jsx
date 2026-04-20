@@ -119,6 +119,21 @@ function Home() {
   ];
 
   const projects = [
+
+       {
+      title: 'SLREPSMS',
+      description: 'Sri Lnaka E-Penalty Safty Managment System.',
+      technologies: ['Node js', 'React', 'PsogrsSQL', 'Stripe', 'Autowrapper','Typescript'],
+      images: [
+        // 'RCFMS.png', 'RCFMS-2.png', 'RCFMS-3.png', 'RCFMS-4.png', 'RCFMS-5.png',
+        // 'RCFMS-6.png', 'RCFMS-7.png', 'RCFMS-8.png', 'RCFMS-9.png', 'RCFMS-10.png',
+        // 'RCFMS-11.png', 'RCFMS-12.png', 'RCFMS-13.png', 'RCFMS-14.png', 'RCFMS-15.png',
+        // 'RCFMS-16.png', 'RCFMS-17.png', 'RCFMS-18.png', 'RCFMS-19.png', 'RCFMS-23.png'
+      ],
+       github: 'https://github.com/YoonusAnees/SLREPMSFE.git',
+      githubb: 'https://github.com/YoonusAnees/SLREPSMS-Backend.git',
+      live: 'https://slrepmsfe.vercel.app/'
+    },
     {
       title: 'Road Crime Fine Management System',
       description: 'Full stack system with React, Laravel & MySQL.',
@@ -197,6 +212,16 @@ function Home() {
       images: ['SPC1.png', 'SPC2.png', 'SPC3.png', 'SPC4.png', 'SPC5.png', 'SPC6.png', 'SPC7.png', 'SPC8.png', 'SPC9.png', 'SPC10.png', 'SPC11.png', 'SPC12.png', 'SPC13.png', 'SPC14.png', 'SPC15.png', 'SPC16.png', 'SPC17.png', 'SPC18.png', 'SPC19.png', 'SPC20.png'],
       github: 'https://github.com/YoonusAnees/State-Pharmaceutical-Cooperation-System.git',
       githubb: 'https://github.com/YoonusAnees/StatePharmaceuticalCooperationAPI-BE.git',
+    },
+
+     {
+      title: 'Money Tracking System',
+      description: 'Tracking System where we can see who sent the money and total amount .',
+      technologies: ['Node.js', 'React', 'Express',  'MongoDB',]
+      // images: ['MDPOS.png'],
+      github: 'https://github.com/YoonusAnees/KBMS-FE.git',
+      githubb: 'https://github.com/YoonusAnees/KBMS-BE.git',
+      live: 'https://kbms-seven.vercel.app/'
     },
   ];
 
