@@ -96,15 +96,21 @@ function Home() {
     }
   }, [activeProject]);
 
-  const getImageSrc = (imgPath) => {
-    if (imgPath.startsWith('http')) {
-      return imgPath;
-    }
-    if (!imgPath.startsWith('./') && !imgPath.startsWith('/')) {
-      return `./${imgPath}`;
-    }
+const getImageSrc = (imgPath) => {
+  if (!imgPath || typeof imgPath !== "string") {
+    return 'https://via.placeholder.com/400x224/0f172a/ffffff?text=No+Image';
+  }
+
+  if (imgPath.startsWith('http')) {
     return imgPath;
-  };
+  }
+
+  if (!imgPath.startsWith('./') && !imgPath.startsWith('/')) {
+    return `./${imgPath}`;
+  }
+
+  return imgPath;
+};
 
   const skills = [
     { name: 'React', level: 90, color: 'from-cyan-500 to-blue-600', icon: <Cpu className="w-4 h-4" /> },
