@@ -46,10 +46,10 @@ function Home() {
 
     emailjs
       .sendForm(
-        "service_5hkd6c7",
-        "template_kg6by3o",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        "-_VglBAAGK2O7y9Po",
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
       )
       .then(
         () => {
@@ -424,6 +424,16 @@ function Home() {
       github: "https://github.com/YoonusAnees/KBMS-FE.git",
       githubb: "https://github.com/YoonusAnees/KBMS-BE.git",
       live: "https://kbms-seven.vercel.app/",
+    },
+
+    {
+      title: "Attendance Monitoring System With Invitaton",
+      description: "Here we monitor the attendances throuhg making invitaton .",
+      technologies: ["Node.js", "React", "Express", "MongoDB"],
+      images: ["AttendanceTrackingSystem.png"],
+      github: "https://github.com/YoonusAnees/Attendances-FE.git",
+      githubb: "https://github.com/YoonusAnees/Attendances-BE.git",
+      live: "https://attendances-fe.vercel.app/",
     },
   ];
 
