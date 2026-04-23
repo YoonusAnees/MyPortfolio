@@ -579,6 +579,28 @@ function Home() {
                   <Zap className="w-5 h-5 group-hover:animate-bounce" />
                 </div>
               </button>
+
+              <div className="flex gap-4">
+  <a
+    href="./src/assets/Professional CV Resume Yoonus Anees.pdf"  // <--- Path to your PDF
+    download
+    className="group relative px-8 py-4 rounded-2xl font-semibold text-white overflow-hidden"
+  >
+    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-600 group-hover:from-purple-600 group-hover:to-pink-700 transition-all duration-300"></div>
+    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="relative flex items-center justify-center gap-3">
+      <span>Download CV</span>
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </div>
+  </a>
+</div>
+
             </div>
           </div>
         </div>
@@ -687,60 +709,63 @@ function Home() {
       </section>
 
       {/* Skills Section */}
-      <section
-        id="skills"
-        className="relative py-24 bg-gradient-to-b from-gray-900/50 to-gray-800/50"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 relative inline-block">
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                Skills & Technologies
-              </span>
-              <Zap className="absolute -top-2 -right-8 w-7 h-7 text-yellow-400 animate-pulse" />
-            </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-emerald-500 to-cyan-600 mx-auto rounded-full"></div>
+    <section
+  id="skills"
+  className="relative py-24 bg-gradient-to-b from-gray-900/50 to-gray-800/50"
+>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-20">
+      <h2 className="text-4xl md:text-5xl font-bold mb-6 relative inline-block">
+        <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+          Skills & Technologies
+        </span>
+        <Zap className="absolute -top-2 -right-8 w-7 h-7 text-yellow-400 animate-pulse" />
+      </h2>
+      <div className="w-32 h-1 bg-gradient-to-r from-emerald-500 to-cyan-600 mx-auto rounded-full"></div>
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {skills.map((skill, index) => (
+        <div
+          key={index}
+          className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-cyan-500/30 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/10"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-lg bg-gradient-to-br ${skill.color}`}>
+                {skill.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-white">
+                {skill.name}
+              </h3>
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              {skill.level}%
+            </span>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="group bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-cyan-500/30 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/10"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`p-2 rounded-lg bg-gradient-to-br ${skill.color}`}
-                    >
-                      {skill.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-white">
-                      {skill.name}
-                    </h3>
-                  </div>
-                  <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                    {skill.level}%
-                  </span>
-                </div>
-
-                <div className="relative">
-                  <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out group-hover:animate-pulse`}
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-400 mt-2">
-                    <span>Beginner</span>
-                    <span>Expert</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="relative">
+            <div className="w-full h-3 bg-gray-700/50 rounded-full overflow-hidden">
+              {/* Animated Progress Bar */}
+              <motion.div
+                className={`h-full rounded-full bg-gradient-to-r ${skill.color} group-hover:animate-pulse`}
+                initial={{ width: 0 }}
+                whileInView={{ width: `${skill.level}%` }}
+                viewport={{ once: true }} // Ensures it only animates once when scrolling down
+                transition={{ duration: 1.5, ease: "easeOut" }}
+              ></motion.div>
+            </div>
+            
+            <div className="flex justify-between text-sm text-gray-400 mt-2">
+              <span>Beginner</span>
+              <span>Expert</span>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Projects Section */}
       <section id="projects" className="relative py-24">
