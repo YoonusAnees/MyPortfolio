@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { AnimatePresence, motion } from "framer-motion";
+import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 
 import { LuTvMinimal } from "react-icons/lu";
 import {
@@ -435,6 +436,16 @@ function Home() {
       githubb: "https://github.com/YoonusAnees/Attendances-BE.git",
       live: "https://attendances-fe.vercel.app/",
     },
+
+    {
+      title : "Eivor.s",
+       description: "Luxury Women Clothing website .",
+      technologies: ["Node.js", "React", "Express", "MongoDB"],
+      images: ["Eivor-1.png", "Eivor-2.png", "Eivor-3.png", "Eivor-4.png", "Eivor-5.png"],
+      live: "https://eivor.vercel.app/",
+      projectTitle : "Client Project",
+
+    },
   ];
 
   return (
@@ -537,7 +548,7 @@ function Home() {
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
                   Yoonus Anees
                 </span>
-              </h1>
+              </h1>0
             </div>
 
             <div className="space-y-6">
@@ -883,6 +894,11 @@ function Home() {
                         <span className="text-sm font-medium">Live Demo</span>
                       </a>
                     )}
+
+                       <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group/link">
+                          <AiOutlineFundProjectionScreen  size={18} />
+                                     <span className="text-sm font-medium"> {project.projectTitle}</span>
+                        </div>
                   </div>
                 </div>
               </div>
