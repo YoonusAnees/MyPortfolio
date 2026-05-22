@@ -446,6 +446,17 @@ function Home() {
       projectTitle : "Client Project",
 
     },
+
+     {
+      title : "ITC GOLD GOUSE",
+       description: "Jewellery Shop.",
+      technologies: ["Node.js", "Next.js", "Express", "MongoDB"],
+      images: ["itc-1.png", "itc-2.png", "itc-3.png", "itc-4.png", "itc-5.png" ,"itc-6.png"],
+      live: "https://itc-gold-house.vercel.app/",
+      projectTitle : "Client Project",
+
+    },
+
   ];
 
   return (
