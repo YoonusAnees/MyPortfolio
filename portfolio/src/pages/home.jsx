@@ -28,6 +28,7 @@ import {
   Globe,
   Terminal,
 } from "lucide-react";
+import cvPdf from "../assets/Professional CV Resume Yoonus Anees.pdf";
 
 function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -604,8 +605,8 @@ function Home() {
 
               <div className="flex gap-4">
   <a
-    href="./src/assets/Professional CV Resume Yoonus Anees.pdf"  // <--- Path to your PDF
-    download
+    href={cvPdf}
+    download="Yoonus_Anees_CV.pdf"
     className="group relative px-8 py-4 rounded-2xl font-semibold text-white overflow-hidden"
   >
     <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-600 group-hover:from-purple-600 group-hover:to-pink-700 transition-all duration-300"></div>
