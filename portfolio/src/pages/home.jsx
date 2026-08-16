@@ -559,7 +559,7 @@ function Home() {
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
                   Yoonus Anees
                 </span>
-              </h1>0
+              </h1>
             </div>
 
             <div className="space-y-6">
