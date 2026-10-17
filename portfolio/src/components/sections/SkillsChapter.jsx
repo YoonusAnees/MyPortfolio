@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import { motion as Motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Cpu,
@@ -29,9 +29,31 @@ import { playSound } from "../../utils/speechVoice";
 export default function SkillsChapter() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSkill, setSelectedSkill] = useState(null);
   const lastHoverSoundRef = useRef(0);
   const searchInputRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // Handle body scroll lock and Escape key listener when popup modal is open
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setSelectedSkill(null);
+      }
+    };
+
+    if (selectedSkill) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedSkill]);
 
   const categories = [
     { id: "all", label: "All Technologies" },
@@ -592,24 +614,237 @@ export default function SkillsChapter() {
                 index={index}
                 shouldReduceMotion={shouldReduceMotion}
                 triggerHoverSound={triggerHoverSound}
+                onSelect={(selected) => {
+                  playSound("click");
+                  setSelectedSkill(selected);
+                }}
               />
             ))}
           </div>
         )}
       </div>
+
+      {/* Centered Modal Pop-up with Dimmed Blurred Backdrop */}
+      <AnimatePresence>
+        {selectedSkill && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
+            {/* Dimmed Blurred Backdrop */}
+            <Motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => {
+                playSound("click");
+                setSelectedSkill(null);
+              }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Centered Modal Card */}
+            <Motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              role="dialog"
+              aria-modal="true"
+              className="relative w-full max-w-2xl max-h-[88vh] bg-neutral-900/95 border border-amber-500/40 rounded-3xl shadow-2xl shadow-black/90 backdrop-blur-2xl overflow-hidden flex flex-col z-10"
+            >
+              {/* Modal Header */}
+              <div className="p-6 border-b border-neutral-800/80 bg-neutral-900/80 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="p-3.5 rounded-2xl bg-neutral-800/90 border border-neutral-700/60 shadow-inner">
+                    {selectedSkill.icon}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-white">
+                        {selectedSkill.name}
+                      </h3>
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700/60">
+                        {selectedSkill.category}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xs font-mono font-semibold text-amber-300">
+                        Proficiency: {selectedSkill.level}%
+                      </span>
+                      <span className="text-neutral-600">•</span>
+                      <span className="text-xs font-mono text-neutral-400">
+                        {selectedSkill.proficiencyStatus}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound("click");
+                      setSelectedSkill(null);
+                    }}
+                    className="p-2 rounded-2xl bg-neutral-800/90 hover:bg-neutral-800 border border-neutral-700/80 text-neutral-400 hover:text-white transition-all shadow-md group flex items-center gap-1.5"
+                    title="Close (Esc)"
+                  >
+                    <span className="text-[10px] font-mono text-neutral-500 group-hover:text-neutral-400 px-1 hidden sm:inline">ESC</span>
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Proficiency Level Progress Bar */}
+              <div className="relative w-full h-1 bg-neutral-800">
+                <Motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${selectedSkill.level}%` }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className={`h-full ${selectedSkill.color}`}
+                />
+              </div>
+
+              {/* Scrollable Modal Content */}
+              <div className="p-6 space-y-6 overflow-y-auto max-h-[calc(88vh-140px)]">
+                {/* Architectural Implementation */}
+                <div className="space-y-2">
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
+                    <Code2 className="w-3.5 h-3.5 text-amber-400" />
+                    Architectural Implementation
+                  </div>
+                  <p className="text-sm text-neutral-300 leading-relaxed font-light bg-neutral-950/40 p-4 rounded-2xl border border-neutral-800/80">
+                    {selectedSkill.extendedDescription}
+                  </p>
+                </div>
+
+                {/* Associated Tools & Ecosystem */}
+                {selectedSkill.relatedTech && selectedSkill.relatedTech.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+                      Associated Tools & Ecosystem
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedSkill.relatedTech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1.5 bg-neutral-800/90 text-neutral-200 rounded-xl text-xs font-mono border border-neutral-700/60"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Real Connected Projects */}
+                <div className="space-y-3 pt-2 border-t border-neutral-800/80">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-1.5">
+                      <FolderGit2 className="w-3.5 h-3.5 text-amber-400" />
+                      Portfolio Projects Using {selectedSkill.name.split(" ")[0]}
+                    </div>
+                    {selectedSkill.projects.length > 0 && (
+                      <a
+                        href="#projects"
+                        onClick={() => {
+                          playSound("click");
+                          setSelectedSkill(null);
+                        }}
+                        className="text-xs font-mono text-amber-400 hover:text-amber-300 flex items-center gap-0.5 transition-colors"
+                      >
+                        <span>View in Projects</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+
+                  {selectedSkill.projects.length > 0 ? (
+                    <div className="space-y-2.5">
+                      {selectedSkill.projects.map((proj) => (
+                        <div
+                          key={proj.title}
+                          className="p-3.5 rounded-2xl bg-neutral-950/50 border border-neutral-800/90 hover:border-neutral-700 transition-colors space-y-2"
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-xs font-bold text-white">
+                                {proj.title}
+                              </h4>
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700/60">
+                                {proj.badge}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              {proj.github && (
+                                <a
+                                  href={proj.github}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    playSound("click");
+                                  }}
+                                  aria-label={`View code for ${proj.title}`}
+                                  className="p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors"
+                                >
+                                  <Github className="w-3.5 h-3.5" />
+                                </a>
+                              )}
+                              {proj.live && (
+                                <a
+                                  href={proj.live}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    playSound("click");
+                                  }}
+                                  aria-label={`Open live demo for ${proj.title}`}
+                                  className="p-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 hover:text-white border border-amber-500/40 transition-colors"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                            {proj.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-4 rounded-2xl bg-neutral-950/50 border border-neutral-800/80 text-xs text-neutral-400 font-light leading-relaxed">
+                      {selectedSkill.note || "Utilized as a foundational stack technology across enterprise workflows."}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-4 px-6 border-t border-neutral-800/80 bg-neutral-900/80 flex items-center justify-between text-xs font-mono text-neutral-500">
+                <span>Click outside or ESC to close</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    playSound("click");
+                    setSelectedSkill(null);
+                  }}
+                  className="px-4 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-medium transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </Motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
 
-// Individual Skill Card with dedicated, unique state isolation
-function SkillCard({ skill, index, shouldReduceMotion, triggerHoverSound }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleExpand = () => {
-    playSound("click");
-    setIsExpanded((prev) => !prev);
-  };
-
+// Individual Skill Card in Grid
+function SkillCard({ skill, index, shouldReduceMotion, triggerHoverSound, onSelect }) {
   return (
     <Motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -620,227 +855,64 @@ function SkillCard({ skill, index, shouldReduceMotion, triggerHoverSound }) {
         delay: shouldReduceMotion ? 0 : index * 0.03,
       }}
       onMouseEnter={triggerHoverSound}
-      className={`group relative rounded-3xl bg-neutral-900/60 backdrop-blur-xl border transition-all duration-300 ${
-        isExpanded
-          ? "border-amber-500/50 bg-neutral-900/90 shadow-2xl shadow-amber-500/5 ring-1 ring-amber-500/20"
-          : "border-neutral-800 hover:border-neutral-700 hover:scale-[1.01]"
-      }`}
+      onClick={() => onSelect(skill)}
+      className="group relative rounded-3xl bg-neutral-900/60 backdrop-blur-xl border border-neutral-800 hover:border-amber-500/40 hover:bg-neutral-900/80 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl hover:shadow-amber-500/5 cursor-pointer w-full text-left p-6"
     >
-      {/* Card Header & Main Trigger */}
-      <button
-        type="button"
-        onClick={toggleExpand}
-        aria-expanded={isExpanded}
-        aria-controls={`skill-panel-${skill.id}`}
-        id={`skill-header-${skill.id}`}
-        className="w-full text-left p-6 outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-3xl"
-      >
-        <div className="flex items-start justify-between gap-3 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-neutral-800/80 border border-neutral-700/60 shrink-0">
-              {skill.icon}
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-white group-hover:text-amber-200 transition-colors">
-                {skill.name}
-              </h3>
-              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">
-                {skill.category}
-              </span>
-            </div>
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-2xl bg-neutral-800/80 border border-neutral-700/60 shrink-0 group-hover:border-amber-500/30 group-hover:bg-neutral-800 transition-colors">
+            {skill.icon}
           </div>
-
-          {/* Level and Expand Indicator */}
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-sm font-mono font-bold text-neutral-300">
-              {skill.level}%
+          <div>
+            <h3 className="text-base font-bold text-white group-hover:text-amber-200 transition-colors">
+              {skill.name}
+            </h3>
+            <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">
+              {skill.category}
             </span>
-            <div
-              className={`p-1.5 rounded-xl border transition-all duration-300 ${
-                isExpanded
-                  ? "bg-amber-500/20 text-amber-300 border-amber-500/40 rotate-180"
-                  : "bg-neutral-800/80 text-neutral-400 border-neutral-700/60 group-hover:text-neutral-200"
-              }`}
-            >
-              <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300" />
-            </div>
           </div>
         </div>
 
-        <p className="text-xs text-neutral-400 leading-relaxed mb-4 font-light">
-          {skill.description}
-        </p>
-
-        {/* Proficiency Progress Meter */}
-        <div className="relative w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-          <Motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: `${skill.level}%` }}
-            viewport={{ once: true }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.9,
-              ease: "easeOut",
-            }}
-            className={`h-full rounded-full ${skill.color}`}
-          />
+        {/* Level and Expand Indicator */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-sm font-mono font-bold text-neutral-300">
+            {skill.level}%
+          </span>
+          <div className="p-1.5 rounded-xl border border-neutral-700/60 bg-neutral-800/80 text-neutral-400 group-hover:text-amber-300 group-hover:border-amber-500/40 transition-colors">
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
         </div>
+      </div>
 
-        {/* Hint to expand/collapse */}
-        <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-neutral-500 group-hover:text-neutral-400 transition-colors">
-          <span>{isExpanded ? "Click to collapse" : "Click to view details"}</span>
-          {skill.projects.length > 0 && (
-            <span className="text-amber-400/80">
-              {skill.projects.length} connected project{skill.projects.length > 1 ? "s" : ""}
-            </span>
-          )}
-        </div>
-      </button>
+      <p className="text-xs text-neutral-400 leading-relaxed mb-4 font-light">
+        {skill.description}
+      </p>
 
-      {/* Expanded Information Drawer */}
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <Motion.div
-            id={`skill-panel-${skill.id}`}
-            role="region"
-            aria-labelledby={`skill-header-${skill.id}`}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.35,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="overflow-hidden border-t border-neutral-800/80"
-          >
-            <div className="p-6 pt-5 space-y-5 bg-neutral-950/40 rounded-b-3xl">
-              {/* Proficiency Level Status Badge */}
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{skill.proficiencyStatus}</span>
-                </div>
-                <span className="text-[11px] font-mono text-neutral-400">
-                  Production Tested
-                </span>
-              </div>
+      {/* Proficiency Progress Meter */}
+      <div className="relative w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+        <Motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: `${skill.level}%` }}
+          viewport={{ once: true }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.9,
+            ease: "easeOut",
+          }}
+          className={`h-full rounded-full ${skill.color}`}
+        />
+      </div>
 
-              {/* Extended In-depth Description */}
-              <div className="space-y-1.5">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
-                  <Code2 className="w-3.5 h-3.5 text-neutral-400" />
-                  Architectural Implementation
-                </div>
-                <p className="text-xs text-neutral-300 leading-relaxed font-light">
-                  {skill.extendedDescription}
-                </p>
-              </div>
-
-              {/* Related Technologies & Tools */}
-              {skill.relatedTech && skill.relatedTech.length > 0 && (
-                <div className="space-y-2">
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                    Associated Tools & Ecosystem
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {skill.relatedTech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 bg-neutral-800/90 text-neutral-300 rounded-lg text-[11px] font-mono border border-neutral-700/60"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Real Connected Projects */}
-              <div className="space-y-2.5 pt-1 border-t border-neutral-800/80">
-                <div className="flex items-center justify-between">
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-300 flex items-center gap-1.5">
-                    <FolderGit2 className="w-3.5 h-3.5 text-amber-400" />
-                    Portfolio Projects Using {skill.name.split(" ")[0]}
-                  </div>
-                  {skill.projects.length > 0 && (
-                    <a
-                      href="#projects"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playSound("click");
-                      }}
-                      className="text-[11px] font-mono text-amber-400 hover:text-amber-300 flex items-center gap-0.5 transition-colors"
-                    >
-                      <span>View all</span>
-                      <ArrowUpRight className="w-3 h-3" />
-                    </a>
-                  )}
-                </div>
-
-                {skill.projects.length > 0 ? (
-                  <div className="space-y-2">
-                    {skill.projects.map((proj) => (
-                      <div
-                        key={proj.title}
-                        className="p-3 rounded-2xl bg-neutral-900/90 border border-neutral-800 hover:border-neutral-700 transition-colors space-y-2"
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <h4 className="text-xs font-bold text-white">
-                              {proj.title}
-                            </h4>
-                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-800 text-neutral-300 border border-neutral-700/60">
-                              {proj.badge}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            {proj.github && (
-                              <a
-                                href={proj.github}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  playSound("click");
-                                }}
-                                aria-label={`View code for ${proj.title}`}
-                                className="p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors"
-                              >
-                                <Github className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                            {proj.live && (
-                              <a
-                                href={proj.live}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  playSound("click");
-                                }}
-                                aria-label={`Open live demo for ${proj.title}`}
-                                className="p-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 hover:text-white border border-amber-500/40 transition-colors"
-                              >
-                                <ExternalLink className="w-3.5 h-3.5" />
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                          {proj.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="p-3.5 rounded-2xl bg-neutral-900/60 border border-neutral-800/80 text-xs text-neutral-400 font-light leading-relaxed">
-                    {skill.note || "Utilized as a foundational stack technology across enterprise workflows."}
-                  </div>
-                )}
-              </div>
-            </div>
-          </Motion.div>
+      {/* Card Footer Action */}
+      <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-neutral-400 group-hover:text-amber-200 transition-colors pt-2 border-t border-neutral-800/50">
+        <span className="flex items-center gap-1.5">
+          <span>Click to view details</span>
+        </span>
+        {skill.projects.length > 0 && (
+          <span className="text-amber-400/80">
+            {skill.projects.length} project{skill.projects.length > 1 ? "s" : ""}
+          </span>
         )}
-      </AnimatePresence>
+      </div>
     </Motion.div>
   );
 }
