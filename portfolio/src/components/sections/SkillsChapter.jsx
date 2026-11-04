@@ -101,6 +101,12 @@ export default function SkillsChapter() {
           description: "Jewellery catalogue with dynamic gold rate calculations and luxury branding.",
           live: "https://itc-gold-house.vercel.app/",
         },
+        {
+          title: "QUORA BUILDERS",
+          badge: "Client Production",
+          description: "Quora Builders",
+          live: "https://quora-builders.vercel.app/",
+        }
       ],
     },
     {
@@ -122,6 +128,12 @@ export default function SkillsChapter() {
           description: "Digital law enforcement architecture with strictly typed payment & audit payloads.",
           live: "https://slrepmsfe.vercel.app/",
           github: "https://github.com/YoonusAnees/SLREPMSFE.git",
+        },
+        {
+          title: "AJ-CAR-SALE",
+          badge: "Client Production",
+          description: "Japan-Based Automotive Dealership Showcase Web Application.",
+          live: "https://aj-car-sale.netlify.app/",
         },
       ],
     },
@@ -241,6 +253,12 @@ export default function SkillsChapter() {
           badge: "Client Production",
           description: "Luxury jewellery catalogue with SSR for search indexing and real-time gold rates.",
           live: "https://itc-gold-house.vercel.app/",
+        },
+        {
+          title: "AJ-CAR-SALE",
+          badge: "Client Production",
+          description: "Japan-Based Automotive Dealership Showcase Web Application.",
+          live: "https://aj-car-sale.netlify.app/",
         },
       ],
     },
@@ -438,11 +456,10 @@ export default function SkillsChapter() {
                   playSound("click");
                   setActiveCategory((prev) => (prev === stat.id ? "all" : stat.id));
                 }}
-                className={`p-4 rounded-2xl border text-left transition-all duration-300 backdrop-blur-md flex items-center justify-between group ${
-                  isSelected
-                    ? "bg-neutral-800/90 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/30"
-                    : "bg-neutral-900/50 border-neutral-800/80 hover:border-neutral-700 hover:bg-neutral-800/40"
-                }`}
+                className={`p-4 rounded-2xl border text-left transition-all duration-300 backdrop-blur-md flex items-center justify-between group ${isSelected
+                  ? "bg-neutral-800/90 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/30"
+                  : "bg-neutral-900/50 border-neutral-800/80 hover:border-neutral-700 hover:bg-neutral-800/40"
+                  }`}
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -457,11 +474,10 @@ export default function SkillsChapter() {
                 </div>
                 <div className="text-right">
                   <span
-                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border transition-colors ${
-                      isSelected
-                        ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                        : "bg-neutral-800 text-neutral-400 border-neutral-700/60 group-hover:text-neutral-200"
-                    }`}
+                    className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border transition-colors ${isSelected
+                      ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                      : "bg-neutral-800 text-neutral-400 border-neutral-700/60 group-hover:text-neutral-200"
+                      }`}
                   >
                     {isSelected ? "Active" : "Filter"}
                   </span>
@@ -540,19 +556,17 @@ export default function SkillsChapter() {
                       playSound("click");
                       setActiveCategory(cat.id);
                     }}
-                    className={`px-4 py-2 rounded-xl text-xs font-medium transition-all duration-300 backdrop-blur-md flex items-center gap-1.5 ${
-                      isSelected
-                        ? "bg-neutral-800 text-white border border-amber-500/50 shadow-sm shadow-amber-500/10 ring-1 ring-amber-500/20"
-                        : "bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/50"
-                    }`}
+                    className={`px-4 py-2 rounded-xl text-xs font-medium transition-all duration-300 backdrop-blur-md flex items-center gap-1.5 ${isSelected
+                      ? "bg-neutral-800 text-white border border-amber-500/50 shadow-sm shadow-amber-500/10 ring-1 ring-amber-500/20"
+                      : "bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/50"
+                      }`}
                   >
                     <span>{cat.label}</span>
                     <span
-                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
-                        isSelected
-                          ? "bg-amber-500/20 text-amber-300"
-                          : "bg-neutral-800 text-neutral-500"
-                      }`}
+                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${isSelected
+                        ? "bg-amber-500/20 text-amber-300"
+                        : "bg-neutral-800 text-neutral-500"
+                        }`}
                     >
                       {count}
                     </span>

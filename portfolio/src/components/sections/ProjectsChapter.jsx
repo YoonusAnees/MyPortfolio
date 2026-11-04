@@ -18,6 +18,28 @@ export default function ProjectsChapter() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   const projectsData = [
+
+    {
+      title: "QUORA BUILDERS",
+      category: "client",
+      badge: "Client Production",
+      description: "Quora Builders is a Construction & Building Solution company in Sri Lanka. We provide reliable and high-quality construction services to our clients. We build your dream home with love and care.",
+      technologies: ["React", "Tailwind CSS", "Email JS", "GSAP", "Framer Motion", "SEO"],
+      images: ["Quora bulders.png"],
+      live: "https://quora-builders.vercel.app/",
+      featured: true,
+    },
+
+    {
+      title: "CAR-SALE",
+      category: "client",
+      badge: "Client Production",
+      description: "Japan-Based Automotive Dealership Showcase Web Application",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Framer Motion", "SEO"],
+      images: ["CarSale.png"],
+      live: "https://aj-car-sale.netlify.app/en",
+      featured: true,
+    },
     {
       title: "SLREPSMS",
       category: "enterprise",
@@ -260,11 +282,10 @@ export default function ProjectsChapter() {
                 playSound("click");
                 setActiveFilter(tab.id);
               }}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md ${
-                activeFilter === tab.id
-                  ? "bg-neutral-800 text-white border border-neutral-600 shadow-sm"
-                  : "bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/50"
-              }`}
+              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md ${activeFilter === tab.id
+                ? "bg-neutral-800 text-white border border-neutral-600 shadow-sm"
+                : "bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/50"
+                }`}
             >
               {tab.label}
             </button>
@@ -478,11 +499,10 @@ export default function ProjectsChapter() {
                         playSound("click");
                         setCurrentImageIdx(idx);
                       }}
-                      className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                        currentImageIdx === idx
-                          ? "border-amber-400 scale-105"
-                          : "border-transparent opacity-60 hover:opacity-100"
-                      }`}
+                      className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${currentImageIdx === idx
+                        ? "border-amber-400 scale-105"
+                        : "border-transparent opacity-60 hover:opacity-100"
+                        }`}
                     >
                       <img
                         src={getImageSrc(img)}
